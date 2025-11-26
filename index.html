@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="ar">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Handmade Testing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#fff8f2;
+      --accent:#ff6f61;
+      --muted:#6b6b6b;
+      --card:#ffffff;
+      --glass: rgba(255,255,255,0.6);
+      --shadow: 0 6px 20px rgba(15,15,15,0.08);
+      --radius:16px;
+      --container:1100px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:'Cairo',system-ui,Arial;
+      background:linear-gradient(180deg,var(--bg),#fff);
+      color:#222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.5;
+    }
+    .wrap{max-width:var(--container);margin:0 auto;padding:24px}
+
+    /* Header */
+    header{display:flex;align-items:center;justify-content:space-between;padding:12px 0}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#ff9a8b);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px;box-shadow:var(--shadow)}
+    nav{display:flex;gap:18px;align-items:center}
+    nav a{color:var(--muted);text-decoration:none;font-weight:600}
+    .btn{background:var(--accent);color:white;padding:10px 14px;border-radius:12px;text-decoration:none;font-weight:700;box-shadow:0 6px 18px rgba(255,111,97,0.18)}
+
+    /* Hero */
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:24px;align-items:center;padding:34px 0}
+    .hero h1{font-size:40px;margin:0 0 12px}
+    .hero p{color:var(--muted);margin:0 0 18px}
+    .shop-cta{display:flex;gap:12px}
+    .features{display:flex;gap:12px;margin-top:18px}
+    .feat{background:var(--card);padding:10px;border-radius:12px;box-shadow:var(--shadow);font-weight:600}
+    .hero-art{background:linear-gradient(180deg,#fff,#fff0f0);padding:20px;border-radius:20px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;align-items:center}
+    .hero-art img{width:100%;border-radius:12px;object-fit:cover}
+
+    /* Products */
+    .section{padding:28px 0}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--card);border-radius:14px;padding:14px;box-shadow:var(--shadow);overflow:hidden}
+    .card img{width:100%;height:200px;object-fit:cover;border-radius:10px}
+    .card h3{margin:10px 0 6px;font-size:18px}
+    .price{color:var(--accent);font-weight:800}
+    .meta{display:flex;justify-content:space-between;align-items:center}
+
+    /* Gallery */
+    .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+    .gallery img{width:100%;height:140px;object-fit:cover;border-radius:8px}
+
+    /* Footer */
+    footer{padding:24px 0;color:var(--muted);border-top:1px solid rgba(0,0,0,0.04);margin-top:20px}
+
+    /* Responsive */
+    @media (max-width:980px){
+      .hero{grid-template-columns:1fr;}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .gallery{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:560px){
+      nav{display:none}
+      .hero h1{font-size:28px}
+      .grid{grid-template-columns:1fr}
+      .gallery{grid-template-columns:1fr}
+      .logo{width:48px;height:48px}
+    }
+
+    /* Small interactions */
+    .fade-in{animation:fadeUp .6s ease both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+    .chip{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,111,97,0.08);color:var(--accent);font-weight:700}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.4);opacity:0;pointer-events:none;transition:all .2s}
+    .modal.open{opacity:1;pointer-events:auto}
+    .modal-card{width:min(760px,95%);background:white;padding:18px;border-radius:14px}
+
+    /* utility */
+    .flex{display:flex}
+    .gap{gap:12px}
+  </style>
+</head>
+<body dir="rtl">
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo">HB</div>
+        <div>
+          <div style="font-weight:800">HandyBrand</div>
+          <div style="font-size:12px;color:var(--muted)">منتجات هاند ميد أصيلة</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#products">المنتجات</a>
+        <a href="#about">عن العلامة</a>
+        <a href="#gallery">معرض</a>
+        <a class="btn" href="#contact">تواصل</a>
+      </nav>
+      <button id="menuBtn" aria-label="menu" style="display:none">☰</button>
+    </header>
+
+    <section class="hero">
+      <div class="fade-in">
+        <h1>منتجات هاند ميد  — جودة وفن</h1>
+        <p>متوفر توصيل لكل المحافظات</p>
+        <div class="shop-cta">
+          <a class="btn" href="#products">تسوق الآن</a>
+          <a href="#gallery" style="padding:10px 14px;border-radius:12px;background:transparent;border:2px solid rgba(0,0,0,0.06);font-weight:700">شوف المعرض</a>
+        </div>
+        <div class="features">
+          <div class="feat">شحن سريع</div>
+          <div class="feat">تغليف هدايا</div>
+          <div class="feat">إعادة تدوير</div>
+        </div>
+      </div>
+
+      <aside class="hero-art fade-in">
+        <img src="https://picsum.photos/seed/handmade/420/320" alt="handmade hero">
+        <div style="text-align:center">
+          <div style="font-weight:700">المنتج المميز</div>
+          <div style="color:var(--muted);font-size:13px">خصم 00% - 150 ج.م    <del>300 ج.م</del></div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="products" class="section">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h2>منتجات مختارة</h2>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="chip">الأكثر مبيعاً</span>
+          <select id="filter">
+            <option value="all">الكل</option>
+            <option value="jewelry">إكسسوار</option>
+            <option value="home">ديكور</option>
+            <option value="kids">أطفال</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid" id="productGrid">
+        <!-- cards injected by JS -->
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <h2>عن العلامة</h2>
+      <p style="color:var(--muted)">HandyBrand مشروع قائم على حرفيين مستقلين. بنختار خامات صديقة للبيئة وبندعم ورش تعليمية للشباب. أي قطعة هنا معمولة بإيد وفاكرين تفاصيلها بعناية.</p>
+    </section>
+
+    <section id="gallery" class="section">
+      <h2>معرض الصور</h2>
+      <div class="gallery">
+        <img src="https://picsum.photos/seed/g1/600/400" alt="g1">
+        <img src="https://picsum.photos/seed/g2/600/400" alt="g2">
+        <img src="https://picsum.photos/seed/g3/600/400" alt="g3">
+        <img src="https://picsum.photos/seed/g4/600/400" alt="g4">
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>تواصل معنا</h2>
+      <p style="color:var(--muted)">عايز تشتري بالجملة أو محتاج مساعده؟ ابعتلنا رسالة.</p>
+      <form id="contactForm" style="display:flex;flex-direction:column;gap:10px;max-width:520px">
+        <input placeholder="الاسم" required style="padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)">
+        <input placeholder="البريد الالكتروني" required style="padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)">
+        <textarea placeholder="الرسالة" rows="4" style="padding:10px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)"></textarea>
+        <button class="btn" type="submit">ارسال</button>
+      </form>
+    </section>
+
+    <footer>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
+        <div>© 2025 HandyBrand — كل الحقوق محفوظة</div>
+        <div style="color:var(--muted)">تصميم بسيط — جاهز للتعديل</div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal" role="dialog" aria-hidden="true">
+    <div class="modal-card">
+      <button id="closeModal" style="float:left;background:transparent;border:none;font-size:18px">إغلاق ✕</button>
+      <div id="modalContent" style="display:flex;gap:14px;align-items:flex-start">
+        <!-- content injected -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // sample product data
+    const products = [
+      {id:1,title:'طقم عُقد خشب',cat:'jewelry',price:220,img:'https://picsum.photos/seed/p1/800/600',desc:'طقم أنيق مصنوع من خشب الزان والمطلي يدوياً.'},
+      {id:2,title:'شمعة عطرية',cat:'home',price:150,img:'https://picsum.photos/seed/p2/800/600',desc:'شمعة معبأة في برطمان زجاجي مع روائح طبيعية.'},
+      {id:3,title:'مفرش صغير',cat:'home',price:330,img:'https://picsum.photos/seed/p3/800/600',desc:'مفرش يدوي بتطريز تقليدي.'},
+      {id:4,title:'لعبة طفل قماش',cat:'kids',price:120,img:'https://picsum.photos/seed/p4/800/600',desc:'محشوة بقماش ناعم وصديقة للأطفال.'},
+      {id:5,title:'حامل مجوهرات',cat:'jewelry',price:95,img:'https://picsum.photos/seed/p5/800/600',desc:'حامل صغير لترتيب الحلقان والسلاسل.'},
+      {id:6,title:'لوحة حائط صغيرة',cat:'home',price:260,img:'https://picsum.photos/seed/p6/800/600',desc:'لوحة مطبوعة ومزينة يدوياً.'}
+    ];
+
+    const grid = document.getElementById('productGrid');
+    const filter = document.getElementById('filter');
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modalContent');
+    const closeModal = document.getElementById('closeModal');
+
+    function renderProducts(list){
+      grid.innerHTML = '';
+      list.forEach(p=>{
+        const card = document.createElement('div');card.className='card fade-in';
+        card.innerHTML = `
+          <img src="${p.img}" alt="${p.title}">
+          <h3>${p.title}</h3>
+          <div class="meta"><div class="price">${p.price} ج.م</div><button data-id="${p.id}" class="btn">عرض</button></div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+    renderProducts(products);
+
+    // filter
+    filter.addEventListener('change',e=>{
+      const v = e.target.value;
+      if(v==='all') renderProducts(products);
+      else renderProducts(products.filter(p=>p.cat===v));
+    });
+
+    // open modal
+    document.addEventListener('click',e=>{
+      const btn = e.target.closest('button[data-id]');
+      if(btn){
+        const id = +btn.dataset.id;
+        const p = products.find(x=>x.id===id);
+        openModal(p);
+      }
+    });
+
+    function openModal(p){
+      modalContent.innerHTML = `
+        <div style="flex:1"><img src="${p.img}" alt="${p.title}" style="width:100%;border-radius:10px;height:320px;object-fit:cover"></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+          <h3>${p.title}</h3>
+          <p style="color:var(--muted)">${p.desc}</p>
+          <div style="font-weight:800;font-size:18px">${p.price} ج.م</div>
+          <div style="margin-top:auto;display:flex;gap:8px"><button class="btn" id="buyNow">اشتري دلوقتي</button><button id="addWish" style="padding:10px 14px;border-radius:10px">أضف للمفضلة</button></div>
+        </div>
+      `;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+    }
+
+    closeModal.addEventListener('click',()=>{
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden','true');
+    });
+
+    modal.addEventListener('click',e=>{if(e.target===modal) {modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}});
+
+    // contact form demo
+    document.getElementById('contactForm').addEventListener('submit',e=>{
+      e.preventDefault();
+      alert('تم إرسال الرسالة — هذا قالب تجريبي');
+      e.target.reset();
+    });
+
+    // small: make nav visible on wide screens only
+    function handleResize(){
+      const nav = document.querySelector('nav');
+      if(window.innerWidth<=560){nav.style.display='none'}else{nav.style.display='flex'}
+    }
+    window.addEventListener('resize',handleResize);handleResize();
+  </script>
+</body>
+</html>
